@@ -154,6 +154,24 @@
     }
     .back:active{ transform: scale(.98); }
   </style>
+  <script>
+  const CORRECT_PIN = "300721";
+
+  // Se già sbloccato, non richiedere di nuovo
+  if (localStorage.getItem("valentine_unlocked") !== "yes") {
+    const enteredPin = prompt("💖 Inserisci il nostro PIN segreto 💖");
+
+    if (!enteredPin || enteredPin !== CORRECT_PIN) {
+      alert("PIN errato 😢");
+      document.documentElement.innerHTML = "";
+      throw new Error("Accesso negato");
+    }
+
+    // Sblocca per le prossime pagine/refresh
+    localStorage.setItem("valentine_unlocked", "yes");
+  }
+</script>
+
 </head>
 <body>
   <div class="wrap">
