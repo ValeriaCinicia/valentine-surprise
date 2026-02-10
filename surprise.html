@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>💘 La tua sorpresa</title>
+
   <style>
     :root{
       --bg: #ffb3c1;
@@ -21,7 +22,7 @@
     }
 
     .wrap{
-      max-width: 880px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 22px 16px 34px;
     }
@@ -50,6 +51,26 @@
       box-shadow: 0 18px 50px rgba(0,0,0,.16);
     }
 
+    /* Top row */
+    .topRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom: 12px;
+    }
+    .back{
+      border:none;
+      background: rgba(255,255,255,.6);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+    }
+    .back:active{ transform: scale(.98); }
+
     /* TESTO */
     .message{
       white-space: pre-wrap;
@@ -72,23 +93,25 @@
     .heartFrame{
       position:relative;
       aspect-ratio: 1 / 1;
-      border-radius: 18px;
+      border-radius: 22px;
       overflow:hidden;
       background: rgba(255,255,255,.35);
       box-shadow: 0 10px 28px rgba(0,0,0,.12);
       display:flex;
       align-items:center;
       justify-content:center;
+      padding: 10px; /* cornice più stretta */
     }
 
-    /* “Cuore” con clip-path */
+    /* Cuore più grande dentro il riquadro */
     .heartClip{
-      width: 92%;
-      height: 92%;
+      width: 100%;
+      height: 100%;
       clip-path: path("M 50 92 C 35 78 10 60 10 35 C 10 18 23 8 37 8 C 45 8 50 12 50 17 C 50 12 55 8 63 8 C 77 8 90 18 90 35 C 90 60 65 78 50 92 Z");
-      background: linear-gradient(135deg, rgba(217,4,41,.25), rgba(255,77,109,.25));
+      background: linear-gradient(135deg, rgba(217,4,41,.22), rgba(255,77,109,.22));
       overflow:hidden;
       position:relative;
+      border-radius: 18px;
     }
 
     .heartClip img{
@@ -96,7 +119,7 @@
       height:100%;
       object-fit: cover;
       display:block;
-      transform: scale(1.02);
+      transform: scale(1.08); /* riempi meglio */
     }
 
     .placeholder{
@@ -107,72 +130,75 @@
       justify-content:center;
       text-align:center;
       padding: 10px;
-      font-weight:700;
-      color: rgba(74,11,25,.75);
-      background: rgba(255,255,255,.25);
+      font-weight:800;
+      color: rgba(74,11,25,.78);
+      background: rgba(255,255,255,.22);
     }
 
     /* QR */
     .qrWrap{
-      margin-top: 16px;
+      margin-top: 18px;
       display:flex;
       flex-direction:column;
       align-items:center;
+      gap: 12px;
+    }
+
+    .hintBubble{
+      font-size: clamp(18px, 3.2vw, 26px);
+      font-weight: 900;
+      color: #4a0b19;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.6);
+      padding: 10px 16px;
+      border-radius: 999px;
+      box-shadow: 0 14px 26px rgba(0,0,0,.12);
+      backdrop-filter: blur(6px);
+      display:inline-flex;
+      align-items:center;
       gap: 10px;
+      animation: bob 1.6s ease-in-out infinite;
     }
-    .qrWrap img{
-      width: min(260px, 70vw);
-      height: auto;
-      border-radius: 18px;
-      box-shadow: 0 10px 28px rgba(0,0,0,.12);
+
+    @keyframes bob{
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Card QR più corta e “su misura” */
+    .qrCard{
+      width: min(340px, 86vw);
       background: #fff;
-      padding: 10px;
+      border-radius: 26px;
+      padding: 14px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.14);
+      border: 1px solid rgba(0,0,0,.05);
     }
-    .hint{
-      margin:0;
+
+    .qrCard img{
+      width: 100%;
+      height: auto;
+      display:block;
+      border-radius: 18px;
+    }
+
+    .qrNote{
+      margin: 10px 0 0;
       opacity:.9;
       text-align:center;
       font-size: 14px;
     }
-
-    .topRow{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom: 12px;
-    }
-    .back{
-      border:none;
-      background: rgba(255,255,255,.6);
-      padding: 10px 14px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight: 700;
-      color: var(--text);
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-    }
-    .back:active{ transform: scale(.98); }
   </style>
+
+  <!-- ✅ Niente prompt qui: se non è sbloccato, torna a index -->
   <script>
-  const CORRECT_PIN = "300721";
-
-  // Se già sbloccato, non richiedere di nuovo
-  if (localStorage.getItem("valentine_unlocked") !== "yes") {
-    const enteredPin = prompt("💖 Inserisci il nostro PIN segreto 💖");
-
-    if (!enteredPin || enteredPin !== CORRECT_PIN) {
-      alert("PIN errato 😢");
-      document.documentElement.innerHTML = "";
-      throw new Error("Accesso negato");
+    if (localStorage.getItem("valentine_unlocked") !== "yes") {
+      // Torna a index e chiedi di sbloccare lì (poi verrà rimandato qui)
+      window.location.replace("index.html?to=surprise");
     }
-
-    // Sblocca per le prossime pagine/refresh
-    localStorage.setItem("valentine_unlocked", "yes");
-  }
-</script>
-
+  </script>
 </head>
+
 <body>
   <div class="wrap">
     <header>
@@ -186,42 +212,47 @@
         <div style="font-weight:800;color:var(--accent)">💘</div>
       </div>
 
-      <!-- TESTO: incolla qui il tuo messaggio -->
       <p class="message" id="msg">
 [INCOLLA QUI IL TUO TESTO]
 
 (Esempio: “Da quando ci sei tu…”. Puoi andare a capo quanto vuoi.)
       </p>
 
-      <!-- Foto dentro ai cuori: sostituisci src con le vostre foto -->
       <div class="grid" aria-label="Le nostre foto">
         <div class="heartFrame">
           <div class="heartClip">
-            <img src="assets/photo1.jpg" alt="Foto 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/photo1.jpg" alt="Foto 1"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="placeholder" style="display:none;">Metti qui<br>photo1.jpg</div>
           </div>
         </div>
 
         <div class="heartFrame">
           <div class="heartClip">
-            <img src="assets/photo2.jpg" alt="Foto 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/photo2.jpg" alt="Foto 2"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="placeholder" style="display:none;">Metti qui<br>photo2.jpg</div>
           </div>
         </div>
 
         <div class="heartFrame">
           <div class="heartClip">
-            <img src="assets/photo3.jpg" alt="Foto 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/photo3.jpg" alt="Foto 3"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="placeholder" style="display:none;">Metti qui<br>photo3.jpg</div>
           </div>
         </div>
       </div>
 
-      <!-- QR Code (immagine) -->
       <div class="qrWrap">
-        <p class="hint">Scansiona il QR 💌</p>
-        <img src="assets/qr.png" alt="QR Code" />
+        <div class="hintBubble">Scansiona il QR 💌</div>
+
+        <div class="qrCard">
+          <img src="assets/qr.png" alt="QR Code" />
+          <p class="qrNote">Poi dimmi cosa trovi 😉</p>
+        </div>
       </div>
+
     </div>
   </div>
 </body>
