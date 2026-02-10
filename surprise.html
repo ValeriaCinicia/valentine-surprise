@@ -21,26 +21,10 @@
       min-height: 100svh;
     }
 
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 22px 16px 34px;
-    }
-
-    header{
-      text-align:center;
-      padding: 8px 0 14px;
-    }
-    h1{
-      margin: 10px 0 6px;
-      font-size: clamp(24px, 3.8vw, 40px);
-      line-height:1.1;
-    }
-    .sub{
-      margin:0;
-      font-size: clamp(14px, 2.2vw, 18px);
-      opacity:.92;
-    }
+    .wrap{ max-width: 980px; margin: 0 auto; padding: 22px 16px 34px; }
+    header{ text-align:center; padding: 8px 0 14px; }
+    h1{ margin: 10px 0 6px; font-size: clamp(24px, 3.8vw, 40px); line-height:1.1; }
+    .sub{ margin:0; font-size: clamp(14px, 2.2vw, 18px); opacity:.92; }
 
     .card{
       background: var(--card);
@@ -51,7 +35,6 @@
       box-shadow: 0 18px 50px rgba(0,0,0,.16);
     }
 
-    /* Top row */
     .topRow{
       display:flex;
       justify-content:space-between;
@@ -69,9 +52,7 @@
       color: var(--text);
       box-shadow: 0 10px 22px rgba(0,0,0,.10);
     }
-    .back:active{ transform: scale(.98); }
 
-    /* TESTO */
     .message{
       white-space: pre-wrap;
       font-size: clamp(15px, 2.2vw, 18px);
@@ -79,9 +60,9 @@
       margin: 0;
     }
 
-    /* CUORI con foto */
+    /* ===== HEART PHOTO CARDS ===== */
     .grid{
-      margin-top: 16px;
+      margin-top: 18px;
       display:grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
@@ -90,52 +71,47 @@
       .grid{ grid-template-columns: repeat(3, 1fr); }
     }
 
-    .heartFrame{
-      position:relative;
-      aspect-ratio: 1 / 1;
-      border-radius: 22px;
-      overflow:hidden;
+    .photoCard{
       background: rgba(255,255,255,.35);
+      border-radius: 22px;
+      padding: 14px;
       box-shadow: 0 10px 28px rgba(0,0,0,.12);
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 10px; /* cornice più stretta */
-    }
-
-    /* Cuore più grande dentro il riquadro */
-    .heartClip{
-      width: 100%;
-      height: 100%;
-      clip-path: path("M 50 92 C 35 78 10 60 10 35 C 10 18 23 8 37 8 C 45 8 50 12 50 17 C 50 12 55 8 63 8 C 77 8 90 18 90 35 C 90 60 65 78 50 92 Z");
-      background: linear-gradient(135deg, rgba(217,4,41,.22), rgba(255,77,109,.22));
+      aspect-ratio: 1 / 1;
       overflow:hidden;
       position:relative;
-      border-radius: 18px;
     }
 
-    .heartClip img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.08); /* riempi meglio */
+    .heartSVG{
+      width: 98%;
+      height: 98%;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.10));
+    }
+
+    /* la foto dentro al cuore */
+    .heartImg{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;     /* riempie bene */
+      object-position: center;/* centra i volti */
     }
 
     .placeholder{
       position:absolute;
-      inset:0;
-      display:flex;
+      inset: 14px;
+      display:none;
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding: 10px;
-      font-weight:800;
-      color: rgba(74,11,25,.78);
-      background: rgba(255,255,255,.22);
+      font-weight:900;
+      color: rgba(74,11,25,.75);
+      background: rgba(255,255,255,.35);
+      border-radius: 18px;
     }
 
-    /* QR */
+    /* ===== QR ===== */
     .qrWrap{
       margin-top: 18px;
       display:flex;
@@ -143,11 +119,9 @@
       align-items:center;
       gap: 12px;
     }
-
     .hintBubble{
       font-size: clamp(18px, 3.2vw, 26px);
       font-weight: 900;
-      color: #4a0b19;
       background: rgba(255,255,255,.65);
       border: 1px solid rgba(255,255,255,.6);
       padding: 10px 16px;
@@ -159,13 +133,8 @@
       gap: 10px;
       animation: bob 1.6s ease-in-out infinite;
     }
+    @keyframes bob{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
-    @keyframes bob{
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
-    /* Card QR più corta e “su misura” */
     .qrCard{
       width: min(340px, 86vw);
       background: #fff;
@@ -174,26 +143,13 @@
       box-shadow: 0 14px 30px rgba(0,0,0,.14);
       border: 1px solid rgba(0,0,0,.05);
     }
-
-    .qrCard img{
-      width: 100%;
-      height: auto;
-      display:block;
-      border-radius: 18px;
-    }
-
-    .qrNote{
-      margin: 10px 0 0;
-      opacity:.9;
-      text-align:center;
-      font-size: 14px;
-    }
+    .qrCard img{ width:100%; height:auto; display:block; border-radius: 18px; }
+    .qrNote{ margin: 10px 0 0; opacity:.9; text-align:center; font-size: 14px; }
   </style>
 
-  <!-- ✅ Niente prompt qui: se non è sbloccato, torna a index -->
+  <!-- Se non sbloccato, torna a index (che chiederà il PIN) -->
   <script>
     if (localStorage.getItem("valentine_unlocked") !== "yes") {
-      // Torna a index e chiedi di sbloccare lì (poi verrà rimandato qui)
       window.location.replace("index.html?to=surprise");
     }
   </script>
@@ -213,35 +169,58 @@
       </div>
 
       <p class="message" id="msg">
-[INCOLLA QUI IL TUO TESTO]
-
-(Esempio: “Da quando ci sei tu…”. Puoi andare a capo quanto vuoi.)
+Per quest'anno ho voluto fare qualcosa di diverso, di innovativo, che forse solo io nella tua vita avrei potuto fare. Quindi ecco a te, una pagina tutta nostra, spero tanto che ti piaccia e che ti abbia reso felice nel piccolo.
+        Ti amo tanto.
+        - la tua picci
       </p>
 
       <div class="grid" aria-label="Le nostre foto">
-        <div class="heartFrame">
-          <div class="heartClip">
-            <img src="assets/photo1.jpg" alt="Foto 1"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="placeholder" style="display:none;">Metti qui<br>photo1.jpg</div>
-          </div>
+
+        <!-- CARD 1 -->
+        <div class="photoCard">
+          <svg class="heartSVG" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <clipPath id="heartClip1">
+                <path d="M50 90 C35 75 10 58 10 33 C10 18 22 8 36 8 C44 8 49 12 50 17 C51 12 56 8 64 8 C78 8 90 18 90 33 C90 58 65 75 50 90 Z"/>
+              </clipPath>
+            </defs>
+            <image href="assets/photo1.jpg" x="0" y="0" width="100" height="100"
+                   preserveAspectRatio="xMidYMid slice"
+                   clip-path="url(#heartClip1)"></image>
+          </svg>
+          <div class="placeholder" id="ph1">Metti qui<br>photo1.jpg</div>
         </div>
 
-        <div class="heartFrame">
-          <div class="heartClip">
-            <img src="assets/photo2.jpg" alt="Foto 2"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="placeholder" style="display:none;">Metti qui<br>photo2.jpg</div>
-          </div>
+        <!-- CARD 2 -->
+        <div class="photoCard">
+          <svg class="heartSVG" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <clipPath id="heartClip2">
+                <path d="M50 90 C35 75 10 58 10 33 C10 18 22 8 36 8 C44 8 49 12 50 17 C51 12 56 8 64 8 C78 8 90 18 90 33 C90 58 65 75 50 90 Z"/>
+              </clipPath>
+            </defs>
+            <image href="assets/photo2.jpg" x="0" y="0" width="100" height="100"
+                   preserveAspectRatio="xMidYMid slice"
+                   clip-path="url(#heartClip2)"></image>
+          </svg>
+          <div class="placeholder" id="ph2">Metti qui<br>photo2.jpg</div>
         </div>
 
-        <div class="heartFrame">
-          <div class="heartClip">
-            <img src="assets/photo3.jpg" alt="Foto 3"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="placeholder" style="display:none;">Metti qui<br>photo3.jpg</div>
-          </div>
+        <!-- CARD 3 -->
+        <div class="photoCard">
+          <svg class="heartSVG" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <clipPath id="heartClip3">
+                <path d="M50 90 C35 75 10 58 10 33 C10 18 22 8 36 8 C44 8 49 12 50 17 C51 12 56 8 64 8 C78 8 90 18 90 33 C90 58 65 75 50 90 Z"/>
+              </clipPath>
+            </defs>
+            <image href="assets/photo3.jpg" x="0" y="0" width="100" height="100"
+                   preserveAspectRatio="xMidYMid slice"
+                   clip-path="url(#heartClip3)"></image>
+          </svg>
+          <div class="placeholder" id="ph3">Metti qui<br>photo3.jpg</div>
         </div>
+
       </div>
 
       <div class="qrWrap">
@@ -249,11 +228,29 @@
 
         <div class="qrCard">
           <img src="assets/qr.png" alt="QR Code" />
-          <p class="qrNote">Poi dimmi cosa trovi 😉</p>
+         
         </div>
       </div>
 
     </div>
   </div>
+
+  <script>
+    // Se le foto non esistono o non caricano, mostra placeholder (utile per debug)
+    const checks = [
+      ["assets/photo1.jpg", "ph1"],
+      ["assets/photo2.jpg", "ph2"],
+      ["assets/photo3.jpg", "ph3"],
+    ];
+    checks.forEach(([src, id]) => {
+      const img = new Image();
+      img.onload = () => {};
+      img.onerror = () => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "flex";
+      };
+      img.src = src + "?v=" + Date.now();
+    });
+  </script>
 </body>
 </html>
