@@ -111,10 +111,10 @@
       50%     { box-shadow: 0 18px 34px rgba(217,4,41,.55); }
     }
   </style>
-  <script>
+ <script>
   const CORRECT_PIN = "300721";
 
-  // Se già sbloccato, non richiedere di nuovo
+  // Se non è sbloccato, chiedi il PIN (una sola volta)
   if (localStorage.getItem("valentine_unlocked") !== "yes") {
     const enteredPin = prompt("💖 Inserisci il nostro PIN segreto 💖");
 
@@ -124,10 +124,16 @@
       throw new Error("Accesso negato");
     }
 
-    // Sblocca per le prossime pagine/refresh
     localStorage.setItem("valentine_unlocked", "yes");
   }
+
+  // Se arriviamo qui da surprise, mandalo direttamente alla sorpresa
+  const to = new URLSearchParams(window.location.search).get("to");
+  if (to === "surprise") {
+    window.location.replace("surprise.html");
+  }
 </script>
+
 
 
 </head>
