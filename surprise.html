@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💘 La tua sorpresa</title>
+  <style>
+    :root{
+      --bg: #ffb3c1;
+      --card: rgba(255,255,255,.62);
+      --text: #4a0b19;
+      --accent: #d90429;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top, #ffd6e0 0%, var(--bg) 55%, #ff8fab 100%);
+      min-height: 100svh;
+    }
+
+    .wrap{
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 22px 16px 34px;
+    }
+
+    header{
+      text-align:center;
+      padding: 8px 0 14px;
+    }
+    h1{
+      margin: 10px 0 6px;
+      font-size: clamp(24px, 3.8vw, 40px);
+      line-height:1.1;
+    }
+    .sub{
+      margin:0;
+      font-size: clamp(14px, 2.2vw, 18px);
+      opacity:.92;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 18px 16px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.16);
+    }
+
+    /* TESTO */
+    .message{
+      white-space: pre-wrap;
+      font-size: clamp(15px, 2.2vw, 18px);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* CUORI con foto */
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media (min-width: 720px){
+      .grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .heartFrame{
+      position:relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.35);
+      box-shadow: 0 10px 28px rgba(0,0,0,.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* “Cuore” con clip-path */
+    .heartClip{
+      width: 92%;
+      height: 92%;
+      clip-path: path("M 50 92 C 35 78 10 60 10 35 C 10 18 23 8 37 8 C 45 8 50 12 50 17 C 50 12 55 8 63 8 C 77 8 90 18 90 35 C 90 60 65 78 50 92 Z");
+      background: linear-gradient(135deg, rgba(217,4,41,.25), rgba(255,77,109,.25));
+      overflow:hidden;
+      position:relative;
+    }
+
+    .heartClip img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+    }
+
+    .placeholder{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 10px;
+      font-weight:700;
+      color: rgba(74,11,25,.75);
+      background: rgba(255,255,255,.25);
+    }
+
+    /* QR */
+    .qrWrap{
+      margin-top: 16px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 10px;
+    }
+    .qrWrap img{
+      width: min(260px, 70vw);
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.12);
+      background: #fff;
+      padding: 10px;
+    }
+    .hint{
+      margin:0;
+      opacity:.9;
+      text-align:center;
+      font-size: 14px;
+    }
+
+    .topRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom: 12px;
+    }
+    .back{
+      border:none;
+      background: rgba(255,255,255,.6);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+    }
+    .back:active{ transform: scale(.98); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Per te ❤️</h1>
+      <p class="sub">Una piccola pagina solo nostra.</p>
+    </header>
+
+    <div class="card">
+      <div class="topRow">
+        <button class="back" onclick="history.back()">← Indietro</button>
+        <div style="font-weight:800;color:var(--accent)">💘</div>
+      </div>
+
+      <!-- TESTO: incolla qui il tuo messaggio -->
+      <p class="message" id="msg">
+[INCOLLA QUI IL TUO TESTO]
+
+(Esempio: “Da quando ci sei tu…”. Puoi andare a capo quanto vuoi.)
+      </p>
+
+      <!-- Foto dentro ai cuori: sostituisci src con le vostre foto -->
+      <div class="grid" aria-label="Le nostre foto">
+        <div class="heartFrame">
+          <div class="heartClip">
+            <img src="assets/photo1.jpg" alt="Foto 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none;">Metti qui<br>photo1.jpg</div>
+          </div>
+        </div>
+
+        <div class="heartFrame">
+          <div class="heartClip">
+            <img src="assets/photo2.jpg" alt="Foto 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none;">Metti qui<br>photo2.jpg</div>
+          </div>
+        </div>
+
+        <div class="heartFrame">
+          <div class="heartClip">
+            <img src="assets/photo3.jpg" alt="Foto 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="placeholder" style="display:none;">Metti qui<br>photo3.jpg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Code (immagine) -->
+      <div class="qrWrap">
+        <p class="hint">Scansiona il QR 💌</p>
+        <img src="assets/qr.png" alt="QR Code" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>
