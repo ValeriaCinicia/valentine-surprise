@@ -111,6 +111,17 @@
       50%     { box-shadow: 0 18px 34px rgba(217,4,41,.55); }
     }
   </style>
+  <script>
+  const CORRECT_PIN = "300721"; // <-- CAMBIA QUI IL PIN
+  const enteredPin = prompt("💖 Inserisci il nostro PIN segreto 💖");
+
+  if (enteredPin !== CORRECT_PIN) {
+    alert("PIN errato 😢");
+    document.documentElement.innerHTML = "";
+    throw new Error("Accesso negato");
+  }
+</script>
+
 </head>
 <body>
   <div class="hearts" id="hearts"></div>
